@@ -2,11 +2,11 @@ module github.com/theirish81/fragsfunctions/postgres
 
 go 1.24.0
 
-require github.com/theirish81/frags v0.13.0
+require github.com/theirish81/frags v0.14.0
 
 require (
 	github.com/jackc/pgx/v5 v5.8.0
-	github.com/theirish81/fragsfunctions v0.2.0
+	github.com/theirish81/fragsfunctions v0.3.0
 )
 
 require (
@@ -23,10 +23,12 @@ require (
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/jinzhu/copier v0.4.0 // indirect
+	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/modelcontextprotocol/go-sdk v1.2.0 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
+	github.com/samber/lo v1.52.0 // indirect
 	github.com/yosida95/uritemplate/v3 v3.0.2 // indirect
 	golang.org/x/crypto v0.46.0 // indirect
 	golang.org/x/oauth2 v0.30.0 // indirect
