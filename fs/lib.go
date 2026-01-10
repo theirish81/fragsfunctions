@@ -28,7 +28,7 @@ func New() frags.ToolsCollection {
 				"path": {Type: frags.SchemaString},
 			},
 		},
-		Func: func(args map[string]any) (map[string]any, error) {
+		Func: func(args map[string]any) (any, error) {
 			path, err := fragsfunctions.GetArg[string](args, "path")
 			if err != nil {
 				return nil, err
@@ -45,7 +45,7 @@ func New() frags.ToolsCollection {
 					Size: info.Size(),
 				})
 			}
-			return map[string]any{"files": fds}, nil
+			return fds, nil
 		},
 	})
 	collection.AddFunction(frags.Function{
@@ -58,7 +58,7 @@ func New() frags.ToolsCollection {
 				"path": {Type: frags.SchemaString},
 			},
 		},
-		Func: func(args map[string]any) (map[string]any, error) {
+		Func: func(args map[string]any) (any, error) {
 			path, err := fragsfunctions.GetArg[string](args, "path")
 			if err != nil {
 				return nil, err
@@ -67,7 +67,7 @@ func New() frags.ToolsCollection {
 			if err != nil {
 				return nil, err
 			}
-			return map[string]any{"contents": string(contents)}, nil
+			return map[string]any{"content": string(contents)}, nil
 		},
 	})
 	collection.AddFunction(frags.Function{
@@ -81,7 +81,7 @@ func New() frags.ToolsCollection {
 				"contents": {Type: frags.SchemaString},
 			},
 		},
-		Func: func(args map[string]any) (map[string]any, error) {
+		Func: func(args map[string]any) (any, error) {
 			path, err := fragsfunctions.GetArg[string](args, "path")
 			if err != nil {
 				return nil, err

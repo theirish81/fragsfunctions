@@ -34,7 +34,7 @@ func New() frags.ToolsCollection {
 				"body":    {Type: frags.SchemaString},
 			},
 		},
-		Func: func(args map[string]any) (map[string]any, error) {
+		Func: func(args map[string]any) (any, error) {
 			method, err := fragsfunctions.GetArg[string](args, "method")
 			if err != nil {
 				return nil, err
@@ -72,11 +72,11 @@ func New() frags.ToolsCollection {
 			if strings.Contains(res.Header.Get("Content-Type"), "json") {
 				out := make(map[string]any)
 				if err := json.Unmarshal(data, &out); err == nil {
-					return map[string]any{"result": out}, nil
+					return out, nil
 				}
 				out2 := make([]any, 0)
 				if err := json.Unmarshal(data, &out2); err == nil {
-					return map[string]any{"result": out2}, nil
+					return out2, nil
 				}
 			}
 			return map[string]any{"data": string(data)}, nil

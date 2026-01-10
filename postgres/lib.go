@@ -48,7 +48,7 @@ func New(ctx context.Context, connString string) (frags.ToolsCollection, error) 
 				},
 			},
 		},
-		Func: func(args map[string]any) (map[string]any, error) {
+		Func: func(args map[string]any) (any, error) {
 			query, err := fragsfunctions.GetArg[string](args, "query")
 			if err != nil {
 				return nil, err
@@ -80,7 +80,7 @@ func New(ctx context.Context, connString string) (frags.ToolsCollection, error) 
 
 				results = append(results, rowMap)
 			}
-			return map[string]any{"rows": results}, nil
+			return results, nil
 		},
 	})
 	collection.AddFunction(frags.Function{
@@ -93,7 +93,7 @@ func New(ctx context.Context, connString string) (frags.ToolsCollection, error) 
 				"statement": {Type: frags.SchemaString},
 			},
 		},
-		Func: func(args map[string]any) (map[string]any, error) {
+		Func: func(args map[string]any) (any, error) {
 			statement, err := fragsfunctions.GetArg[string](args, "statement")
 			if err != nil {
 				return nil, err
@@ -119,7 +119,7 @@ func New(ctx context.Context, connString string) (frags.ToolsCollection, error) 
 				},
 			},
 		},
-		Func: func(args map[string]any) (map[string]any, error) {
+		Func: func(args map[string]any) (any, error) {
 			table, err := fragsfunctions.GetArg[string](args, "table")
 			if err != nil {
 				return nil, err
@@ -154,7 +154,7 @@ func New(ctx context.Context, connString string) (frags.ToolsCollection, error) 
 				return nil, fmt.Errorf("rows iteration error: %w", err)
 			}
 
-			return map[string]any{"result": schema}, nil
+			return schema, nil
 		},
 	})
 
