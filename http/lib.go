@@ -19,7 +19,7 @@ func New() frags.ToolsCollection {
 	collection := fragsfunctions.NewBasicCollection("http", "http client functions")
 
 	collection.AddFunction(frags.Function{
-		Name:        "fs_http",
+		Name:        "http_fetch",
 		Description: "executes an HTTP request and returns the response body",
 		Schema: &frags.Schema{
 			Type:     frags.SchemaObject,
