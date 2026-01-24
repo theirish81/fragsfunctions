@@ -48,13 +48,13 @@ func New(ctx context.Context, connString string) (frags.ToolsCollection, error) 
 				},
 			},
 		},
-		Func: func(args map[string]any) (any, error) {
+		Func: func(ctx *frags.FragsContext, args map[string]any) (any, error) {
 			query, err := fragsfunctions.GetArg[string](args, "query")
 			if err != nil {
 				return nil, err
 			}
 			results := make([]map[string]any, 0)
-			rows, err := conn.Query(context.Background(), *query)
+			rows, err := conn.Query(ctx, *query)
 			if err != nil {
 				return nil, err
 			}
@@ -93,7 +93,7 @@ func New(ctx context.Context, connString string) (frags.ToolsCollection, error) 
 				"statement": {Type: frags.SchemaString},
 			},
 		},
-		Func: func(args map[string]any) (any, error) {
+		Func: func(ctx *frags.FragsContext, args map[string]any) (any, error) {
 			statement, err := fragsfunctions.GetArg[string](args, "statement")
 			if err != nil {
 				return nil, err
@@ -119,7 +119,7 @@ func New(ctx context.Context, connString string) (frags.ToolsCollection, error) 
 				},
 			},
 		},
-		Func: func(args map[string]any) (any, error) {
+		Func: func(ctx *frags.FragsContext, args map[string]any) (any, error) {
 			table, err := fragsfunctions.GetArg[string](args, "table")
 			if err != nil {
 				return nil, err

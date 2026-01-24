@@ -34,7 +34,7 @@ func New() frags.ToolsCollection {
 				"body":    {Type: frags.SchemaString},
 			},
 		},
-		Func: func(args map[string]any) (any, error) {
+		Func: func(ctx *frags.FragsContext, args map[string]any) (any, error) {
 			method, err := fragsfunctions.GetArg[string](args, "method")
 			if err != nil {
 				return nil, err
@@ -60,7 +60,7 @@ func New() frags.ToolsCollection {
 			if err != nil {
 				return nil, err
 			}
-			res, err := client.Do(req)
+			res, err := client.Do(req.WithContext(ctx))
 			if err != nil {
 				return nil, err
 			}
