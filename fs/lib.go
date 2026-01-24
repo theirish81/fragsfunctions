@@ -28,7 +28,7 @@ func New() frags.ToolsCollection {
 				"path": {Type: frags.SchemaString},
 			},
 		},
-		Func: func(args map[string]any) (any, error) {
+		Func: func(ctx *frags.FragsContext, args map[string]any) (any, error) {
 			path, err := fragsfunctions.GetArg[string](args, "path")
 			if err != nil {
 				return nil, err
@@ -58,7 +58,7 @@ func New() frags.ToolsCollection {
 				"path": {Type: frags.SchemaString},
 			},
 		},
-		Func: func(args map[string]any) (any, error) {
+		Func: func(ctx *frags.FragsContext, args map[string]any) (any, error) {
 			path, err := fragsfunctions.GetArg[string](args, "path")
 			if err != nil {
 				return nil, err
@@ -81,7 +81,7 @@ func New() frags.ToolsCollection {
 				"contents": {Type: frags.SchemaString},
 			},
 		},
-		Func: func(args map[string]any) (any, error) {
+		Func: func(ctx *frags.FragsContext, args map[string]any) (any, error) {
 			path, err := fragsfunctions.GetArg[string](args, "path")
 			if err != nil {
 				return nil, err

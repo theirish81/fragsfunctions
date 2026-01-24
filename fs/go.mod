@@ -2,9 +2,9 @@ module github.com/theirish81/fragsfunctions/fs
 
 go 1.24.0
 
-require github.com/theirish81/frags v0.14.0
+require github.com/theirish81/frags v0.18.0
 
-require github.com/theirish81/fragsfunctions v0.3.0
+require github.com/theirish81/fragsfunctions v0.4.0
 
 require (
 	github.com/avast/retry-go/v5 v5.0.0 // indirect
@@ -14,8 +14,9 @@ require (
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.30.1 // indirect
-	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
+	github.com/go-viper/mapstructure/v2 v2.5.0 // indirect
 	github.com/google/jsonschema-go v0.3.0 // indirect
+	github.com/google/uuid v1.6.0 // indirect
 	github.com/jinzhu/copier v0.4.0 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
