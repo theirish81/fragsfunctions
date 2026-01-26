@@ -4,6 +4,8 @@ import (
 	"os"
 
 	"github.com/theirish81/frags"
+	"github.com/theirish81/frags/schema"
+	"github.com/theirish81/frags/util"
 	"github.com/theirish81/fragsfunctions"
 )
 
@@ -18,17 +20,17 @@ type Collection struct {
 func New() frags.ToolsCollection {
 	collection := fragsfunctions.NewBasicCollection("fs", "file system functions")
 
-	collection.AddFunction(frags.Function{
+	collection.AddFunction(frags.ExternalFunction{
 		Name:        "fs_ls",
 		Description: "lists files in a provided directory",
-		Schema: &frags.Schema{
-			Type:     frags.SchemaObject,
+		Schema: &schema.Schema{
+			Type:     schema.Object,
 			Required: []string{"path"},
-			Properties: map[string]*frags.Schema{
-				"path": {Type: frags.SchemaString},
+			Properties: map[string]*schema.Schema{
+				"path": {Type: schema.String},
 			},
 		},
-		Func: func(ctx *frags.FragsContext, args map[string]any) (any, error) {
+		Func: func(ctx *util.FragsContext, args map[string]any) (any, error) {
 			path, err := fragsfunctions.GetArg[string](args, "path")
 			if err != nil {
 				return nil, err
@@ -48,17 +50,17 @@ func New() frags.ToolsCollection {
 			return fds, nil
 		},
 	})
-	collection.AddFunction(frags.Function{
+	collection.AddFunction(frags.ExternalFunction{
 		Name:        "fs_read",
 		Description: "reads a file and returns its contents",
-		Schema: &frags.Schema{
-			Type:     frags.SchemaObject,
+		Schema: &schema.Schema{
+			Type:     schema.Object,
 			Required: []string{"path"},
-			Properties: map[string]*frags.Schema{
-				"path": {Type: frags.SchemaString},
+			Properties: map[string]*schema.Schema{
+				"path": {Type: schema.String},
 			},
 		},
-		Func: func(ctx *frags.FragsContext, args map[string]any) (any, error) {
+		Func: func(ctx *util.FragsContext, args map[string]any) (any, error) {
 			path, err := fragsfunctions.GetArg[string](args, "path")
 			if err != nil {
 				return nil, err
@@ -70,18 +72,18 @@ func New() frags.ToolsCollection {
 			return map[string]any{"content": string(contents)}, nil
 		},
 	})
-	collection.AddFunction(frags.Function{
+	collection.AddFunction(frags.ExternalFunction{
 		Name:        "fs_write",
 		Description: "writes a file and returns its contents",
-		Schema: &frags.Schema{
-			Type:     frags.SchemaObject,
+		Schema: &schema.Schema{
+			Type:     schema.Object,
 			Required: []string{"path", "contents"},
-			Properties: map[string]*frags.Schema{
-				"path":     {Type: frags.SchemaString},
-				"contents": {Type: frags.SchemaString},
+			Properties: map[string]*schema.Schema{
+				"path":     {Type: schema.String},
+				"contents": {Type: schema.String},
 			},
 		},
-		Func: func(ctx *frags.FragsContext, args map[string]any) (any, error) {
+		Func: func(ctx *util.FragsContext, args map[string]any) (any, error) {
 			path, err := fragsfunctions.GetArg[string](args, "path")
 			if err != nil {
 				return nil, err

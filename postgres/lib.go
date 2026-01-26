@@ -6,6 +6,8 @@ import (
 
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/theirish81/frags"
+	"github.com/theirish81/frags/schema"
+	"github.com/theirish81/frags/util"
 	"github.com/theirish81/fragsfunctions"
 )
 
@@ -35,20 +37,20 @@ func New(ctx context.Context, connString string) (frags.ToolsCollection, error) 
 	}
 	collection.conn = conn
 
-	collection.AddFunction(frags.Function{
+	collection.AddFunction(frags.ExternalFunction{
 		Name:        "postgres_query",
 		Description: "executes a SELECT query against a PostgreSQL database. Do not use to alter the database record or structure.",
-		Schema: &frags.Schema{
-			Type:     frags.SchemaObject,
+		Schema: &schema.Schema{
+			Type:     schema.Object,
 			Required: []string{"query"},
-			Properties: map[string]*frags.Schema{
+			Properties: map[string]*schema.Schema{
 				"query": {
-					Type:        frags.SchemaString,
+					Type:        schema.String,
 					Description: "a SQL SELECT query",
 				},
 			},
 		},
-		Func: func(ctx *frags.FragsContext, args map[string]any) (any, error) {
+		Func: func(ctx *util.FragsContext, args map[string]any) (any, error) {
 			query, err := fragsfunctions.GetArg[string](args, "query")
 			if err != nil {
 				return nil, err
@@ -83,17 +85,17 @@ func New(ctx context.Context, connString string) (frags.ToolsCollection, error) 
 			return results, nil
 		},
 	})
-	collection.AddFunction(frags.Function{
+	collection.AddFunction(frags.ExternalFunction{
 		Name:        "postgres_statement",
 		Description: "executes an UPDATE or INSERT statement against a PostgreSQL database table",
-		Schema: &frags.Schema{
-			Type:     frags.SchemaObject,
+		Schema: &schema.Schema{
+			Type:     schema.Object,
 			Required: []string{"statement"},
-			Properties: map[string]*frags.Schema{
-				"statement": {Type: frags.SchemaString},
+			Properties: map[string]*schema.Schema{
+				"statement": {Type: schema.String},
 			},
 		},
-		Func: func(ctx *frags.FragsContext, args map[string]any) (any, error) {
+		Func: func(ctx *util.FragsContext, args map[string]any) (any, error) {
 			statement, err := fragsfunctions.GetArg[string](args, "statement")
 			if err != nil {
 				return nil, err
@@ -106,20 +108,20 @@ func New(ctx context.Context, connString string) (frags.ToolsCollection, error) 
 		},
 	})
 
-	collection.AddFunction(frags.Function{
+	collection.AddFunction(frags.ExternalFunction{
 		Name:        "postgres_table_schema",
 		Description: "returns the schema of a PostgreSQL table",
-		Schema: &frags.Schema{
-			Type:     frags.SchemaObject,
+		Schema: &schema.Schema{
+			Type:     schema.Object,
 			Required: []string{"table"},
-			Properties: map[string]*frags.Schema{
+			Properties: map[string]*schema.Schema{
 				"table": {
-					Type:        frags.SchemaString,
+					Type:        schema.String,
 					Description: "the name of the table",
 				},
 			},
 		},
-		Func: func(ctx *frags.FragsContext, args map[string]any) (any, error) {
+		Func: func(ctx *util.FragsContext, args map[string]any) (any, error) {
 			table, err := fragsfunctions.GetArg[string](args, "table")
 			if err != nil {
 				return nil, err
@@ -137,7 +139,7 @@ func New(ctx context.Context, connString string) (frags.ToolsCollection, error) 
 			}
 			defer rows.Close()
 
-			schema := &TableSchema{
+			sx := &TableSchema{
 				Columns: []ColumnSchema{},
 			}
 
@@ -147,14 +149,14 @@ func New(ctx context.Context, connString string) (frags.ToolsCollection, error) 
 				if err != nil {
 					return nil, fmt.Errorf("scan failed: %w", err)
 				}
-				schema.Columns = append(schema.Columns, col)
+				sx.Columns = append(sx.Columns, col)
 			}
 
 			if err := rows.Err(); err != nil {
 				return nil, fmt.Errorf("rows iteration error: %w", err)
 			}
 
-			return schema, nil
+			return sx, nil
 		},
 	})
 

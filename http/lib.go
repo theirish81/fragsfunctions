@@ -9,6 +9,8 @@ import (
 	"time"
 
 	"github.com/theirish81/frags"
+	"github.com/theirish81/frags/schema"
+	"github.com/theirish81/frags/util"
 	"github.com/theirish81/fragsfunctions"
 )
 
@@ -18,23 +20,23 @@ func New() frags.ToolsCollection {
 	}
 	collection := fragsfunctions.NewBasicCollection("http", "http client functions")
 
-	collection.AddFunction(frags.Function{
+	collection.AddFunction(frags.ExternalFunction{
 		Name:        "http_fetch",
 		Description: "executes an HTTP request and returns the response body",
-		Schema: &frags.Schema{
-			Type:     frags.SchemaObject,
+		Schema: &schema.Schema{
+			Type:     schema.Object,
 			Required: []string{"method", "url"},
-			Properties: map[string]*frags.Schema{
+			Properties: map[string]*schema.Schema{
 				"method": {
-					Type: frags.SchemaString,
+					Type: schema.String,
 					Enum: []string{"GET", "POST", "PUT", "PATCH", "DELETE"},
 				},
-				"url":     {Type: frags.SchemaString},
-				"headers": {Type: frags.SchemaObject},
-				"body":    {Type: frags.SchemaString},
+				"url":     {Type: schema.String},
+				"headers": {Type: schema.Object},
+				"body":    {Type: schema.String},
 			},
 		},
-		Func: func(ctx *frags.FragsContext, args map[string]any) (any, error) {
+		Func: func(ctx *util.FragsContext, args map[string]any) (any, error) {
 			method, err := fragsfunctions.GetArg[string](args, "method")
 			if err != nil {
 				return nil, err
