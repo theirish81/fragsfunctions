@@ -19,18 +19,18 @@ func GetArg[T any](args map[string]any, key string) (*T, error) {
 type BasicCollection struct {
 	name        string
 	description string
-	functions   frags.Functions
+	functions   frags.ExternalFunctions
 }
 
 func NewBasicCollection(name, description string) BasicCollection {
 	return BasicCollection{
 		name:        name,
 		description: description,
-		functions:   make(frags.Functions),
+		functions:   make(frags.ExternalFunctions),
 	}
 }
 
-func (bc *BasicCollection) AddFunction(f frags.Function) {
+func (bc *BasicCollection) AddFunction(f frags.ExternalFunction) {
 	f.Collection = bc.name
 	bc.functions[f.Name] = f
 }
@@ -43,6 +43,6 @@ func (bc *BasicCollection) Description() string {
 	return bc.description
 }
 
-func (bc *BasicCollection) AsFunctions() frags.Functions {
+func (bc *BasicCollection) AsFunctions() frags.ExternalFunctions {
 	return bc.functions
 }
