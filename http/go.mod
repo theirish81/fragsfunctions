@@ -3,7 +3,7 @@ module github.com/theirish81/fragsfunctions/http
 go 1.24.0
 
 require (
-	github.com/theirish81/frags v0.18.0
+	github.com/theirish81/frags v0.19.0
 	github.com/theirish81/fragsfunctions v0.4.0
 )
 
@@ -32,5 +32,3 @@ require (
 )
 
 replace github.com/theirish81/fragsfunctions v0.4.0 => ../
-
-replace github.com/theirish81/frags v0.18.0 => ../../frags
