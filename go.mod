@@ -4,7 +4,7 @@ go 1.24.0
 
 toolchain go1.24.8
 
-require github.com/theirish81/frags v0.18.0
+require github.com/theirish81/frags v0.19.0
 
 require (
 	github.com/avast/retry-go/v5 v5.0.0 // indirect
