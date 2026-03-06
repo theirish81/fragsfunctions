@@ -29,7 +29,7 @@ func New() frags.ToolsCollection {
 			Properties: map[string]*schema.Schema{
 				"method": {
 					Type: schema.String,
-					Enum: []string{"GET", "POST", "PUT", "PATCH", "DELETE"},
+					Enum: []any{"GET", "POST", "PUT", "PATCH", "DELETE"},
 				},
 				"url":     {Type: schema.String},
 				"headers": {Type: schema.Object},
