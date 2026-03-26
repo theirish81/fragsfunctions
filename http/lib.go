@@ -21,7 +21,9 @@ func composeFunctionName(instanceName string, functionName string) string {
 	return instanceName + "_" + functionName
 }
 
-func New(instanceName string) frags.ToolsCollection {
+type PreProcessRequestFunc func(req *http.Request) error
+
+func New(instanceName string, ppr PreProcessRequestFunc) frags.ToolsCollection {
 	client := http.Client{
 		Timeout: time.Second * 30,
 	}
@@ -61,14 +63,20 @@ func New(instanceName string) frags.ToolsCollection {
 			}
 
 			req, err := http.NewRequest(*method, *url, reader)
+			if err != nil {
+				return nil, err
+			}
+			if ppr != nil {
+				if err := ppr(req); err != nil {
+					return nil, err
+				}
+			}
 			if headers != nil {
 				for k, v := range *headers {
 					req.Header.Set(k, v.(string))
 				}
 			}
-			if err != nil {
-				return nil, err
-			}
+
 			res, err := client.Do(req.WithContext(ctx))
 			if err != nil {
 				return nil, err
