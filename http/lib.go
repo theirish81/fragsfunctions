@@ -14,14 +14,21 @@ import (
 	"github.com/theirish81/fragsfunctions"
 )
 
-func New() frags.ToolsCollection {
+func composeFunctionName(instanceName string, functionName string) string {
+	if instanceName == "http" {
+		return functionName
+	}
+	return instanceName + "_" + functionName
+}
+
+func New(instanceName string) frags.ToolsCollection {
 	client := http.Client{
 		Timeout: time.Second * 30,
 	}
-	collection := fragsfunctions.NewBasicCollection("http", "http client functions")
+	collection := fragsfunctions.NewBasicCollection(instanceName, "http client functions")
 
 	collection.AddFunction(frags.ExternalFunction{
-		Name:        "http_fetch",
+		Name:        composeFunctionName(instanceName, "http_fetch"),
 		Description: "executes an HTTP request and returns the response body",
 		Schema: &schema.Schema{
 			Type:     schema.Object,
