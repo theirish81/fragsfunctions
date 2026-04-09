@@ -3,7 +3,7 @@ module github.com/theirish81/fragsfunctions/http
 go 1.25.0
 
 require (
-	github.com/theirish81/frags v0.25.0
+	github.com/theirish81/frags v0.26.0-rc0
 	github.com/theirish81/fragsfunctions v0.6.0
 )
 
@@ -25,6 +25,7 @@ require (
 	github.com/samber/lo v1.53.0 // indirect
 	github.com/segmentio/asm v1.1.3 // indirect
 	github.com/segmentio/encoding v0.5.4 // indirect
+	github.com/theirish81/sesat2 v0.0.0-20260409090908-6631029d60fb // indirect
 	github.com/yosida95/uritemplate/v3 v3.0.2 // indirect
 	golang.org/x/crypto v0.46.0 // indirect
 	golang.org/x/oauth2 v0.36.0 // indirect

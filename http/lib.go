@@ -6,7 +6,6 @@ import (
 	"io"
 	"net/http"
 	"strings"
-	"time"
 
 	"github.com/theirish81/frags"
 	"github.com/theirish81/frags/schema"
@@ -23,10 +22,7 @@ func composeFunctionName(instanceName string, functionName string) string {
 
 type PreProcessRequestFunc func(req *http.Request) error
 
-func New(instanceName string, ppr PreProcessRequestFunc) frags.ToolsCollection {
-	client := http.Client{
-		Timeout: time.Second * 30,
-	}
+func New(instanceName string, ppr PreProcessRequestFunc, client *http.Client) frags.ToolsCollection {
 	collection := fragsfunctions.NewBasicCollection(instanceName, "http client functions")
 
 	collection.AddFunction(frags.ExternalFunction{
