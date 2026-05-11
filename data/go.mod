@@ -1,4 +1,4 @@
-module data
+module github.com/theirish81/fragsfunctions/data
 
 go 1.25.4
 
