@@ -3,7 +3,7 @@ module github.com/theirish81/fragsfunctions/postgres
 go 1.25.0
 
 require (
-	github.com/jackc/pgx/v5 v5.9.1
+	github.com/jackc/pgx/v5 v5.9.2
 	github.com/theirish81/frags v0.25.0
 	github.com/theirish81/fragsfunctions v0.6.0
 )
