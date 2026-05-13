@@ -14,7 +14,7 @@ import (
 func New(db *zealql.Database) frags.ToolsCollection {
 	collection := fragsfunctions.NewBasicCollection("data", "data manipulation functions")
 	collection.AddFunction(frags.ExternalFunction{
-		Name:        "list_internal_db_tables",
+		Name:        "internal_db_list_tables",
 		Description: `lists all the tables in the Internal Database, used for simplifying  dataset manipulation.`,
 		Schema: &schema.Schema{
 			Type: schema.Object,
@@ -24,10 +24,9 @@ func New(db *zealql.Database) frags.ToolsCollection {
 		},
 	})
 	collection.AddFunction(frags.ExternalFunction{
-		Name: "describe_internal_db_tables",
+		Name: "internal_db_describe_tables",
 		Description: `describes multiple tables in the Internal Database, used for simplifying  dataset manipulation.
 Provide no arguments to describe all the tables.`,
-		Collection: "internal_db_functions",
 		Schema: &schema.Schema{
 			Type:        schema.Object,
 			Description: "the tables to describe. Provide no arguments to describe all the tables.",
@@ -65,7 +64,7 @@ Provide no arguments to describe all the tables.`,
 		},
 	})
 	collection.AddFunction(frags.ExternalFunction{
-		Name:        "query_internal_db_tables",
+		Name:        "internal_db_query",
 		Description: `queries the Internal Database, used for simplifying dataset manipulation.`,
 		Schema: &schema.Schema{
 			Type:        schema.Object,
@@ -86,7 +85,7 @@ Provide no arguments to describe all the tables.`,
 		},
 	})
 	collection.AddFunction(frags.ExternalFunction{
-		Name: "insert_in_internal_db_table",
+		Name: "internal_db_insert",
 		Description: `insert data into the database, used for simplifying  dataset manipulation. If the table does not,
 exist, it will be created upon insertion.`,
 		Schema: &schema.Schema{
@@ -110,19 +109,18 @@ exist, it will be created upon insertion.`,
 			if err != nil {
 				return nil, err
 			}
-			records, err := fragsfunctions.GetArg[[]any](data, "records")
-			if err != nil {
-				return nil, err
+			if records := data["records"]; tableName != nil && records != nil {
+				table, err := db.Insert(*tableName, records)
+				if err != nil {
+					return nil, err
+				}
+				return table.ToSQL(), nil
 			}
-			table, err := db.CreateTable(*tableName, *records)
-			if err != nil {
-				return nil, err
-			}
-			return table.ToSQL(), nil
+			return nil, errors.New("table_name or records not provided")
 		},
 	})
 	collection.AddFunction(frags.ExternalFunction{
-		Name: "execute_javascript",
+		Name: "javascript_execute",
 		Description: `execute JavaScript code (using completion-value notation) for the sole purpose of number crunching
 and data reshaping. No NodeJS objects are allowed (console.log... etc). Use it to perform batch operations on data-sets,
 or compute special values`,
